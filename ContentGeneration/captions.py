@@ -110,7 +110,7 @@ def overlay_video(video, audio_data, watermark_path, endcard_path, colored=False
     [subtitles, transcription] = audio_data
     text_clips = []
     for sub in subtitles:
-        colored = 'white'
+        color = 'white'
         if colored:
             color = 'rgb(126, 217, 87)' if (random.choice(range(10)) > 8) else 'white'
             color = 'yellow' if (random.choice(range(10)) > 6) else color
