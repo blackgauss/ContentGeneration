@@ -477,4 +477,3 @@ dependencies:
       - weasel==0.3.4
       - whisper-timestamped==1.14.2
       - youtube-dl==2021.12.17
-prefix: C:\Users\eimat\miniconda3\envs\ContentGeneration
