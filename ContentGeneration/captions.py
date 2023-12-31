@@ -6,6 +6,16 @@ import random
 import os
 
 def get_file_names(folder, file_type='.mp4'):
+    """
+    Get the names of files in a folder with a specific file type.
+
+    Parameters:
+    folder (str): The path to the folder.
+    file_type (str, optional): The file type to filter the files. Defaults to '.mp4'.
+
+    Returns:
+    list: A list of file names without the file extension.
+    """
     folder_path = folder
     file_names = []
     
@@ -17,40 +27,87 @@ def get_file_names(folder, file_type='.mp4'):
     return file_names
 
 def make_transcription(audio_filename):
+    """
+    Transcribes the audio file using the Whisper ASR model.
+
+    Args:
+        audio_filename (str): The path to the audio file.
+
+    Returns:
+        str: The transcription of the audio file.
+    """
     audio = whisper.load_audio(audio_filename)
-    # model = whisper.load_model("tiny", device="gpu")
     model = whisper.load_model('base')
     result = whisper.transcribe(model, audio, language="en")
     return result
 
 def make_timestamps(transcription):
+    """
+    Create timestamps for each word in the transcription.
+
+    Args:
+        transcription (dict): The transcription containing segments and words.
+
+    Returns:
+        list: A list of timestamps and the original transcription.
+    """
     timestamps = []
     for seg in transcription['segments']:
         for word in seg['words']:
             timestamps.append([(word['start'], word['end']), word['text']])
     return [timestamps, transcription]
 
-# Function to create a TextClip for each subtitle
 def make_textclip(sub, font_name, font_size, font_color):
+    """
+    Create a text clip with the given subtitle, font name, font size, and font color.
+
+    Parameters:
+    sub (tuple): A tuple containing the start and end time of the subtitle.
+    font_name (str): The name of the font to be used.
+    font_size (int): The size of the font.
+    font_color (str): The color of the font.
+
+    Returns:
+    list: A list containing the text clip, start time, and end time.
+    """
     start, end = sub[0]
     txt = sub[1]
     return [TextClip(txt, fontsize=font_size, font=font_name, color=font_color, stroke_color='black', stroke_width=3), start, end]
 
 def resize(t, duration):
-    # Starting scale factor
+    """
+    Resizes the content based on the given time and duration.
+
+    Parameters:
+    t (float): The current time.
+    duration (float): The total duration.
+
+    Returns:
+    float: The scale factor for resizing the content.
+    """
     duration = min(duration, 0.2)
     start_scale = 1
-    # End scale factor (the size to which the text should grow)
     end_scale = 1.2
-    # Calculate the scaling factor based on elapsed time and total duration
     t * start_scale + ((duration - t) / duration) ** 0.3 * (end_scale - start_scale)
     scale_factor = min(start_scale + t/duration * (end_scale - start_scale), end_scale)
     return scale_factor
 
 # Function to overlay the text clips on the video
 def overlay_video(video_filename, audio_data, watermark_path, endcard_path, animate=False):
+    """
+    Overlay text, watermark, and end card on a video.
+
+    Args:
+        video_filename (str): Path to the video file.
+        audio_data (list): List containing subtitles and transcription.
+        watermark_path (str): Path to the watermark image file.
+        endcard_path (str): Path to the end card video file.
+        animate (bool, optional): Whether to animate the text. Defaults to False.
+
+    Returns:
+        final (VideoClip): Composite video clip with text, watermark, and end card overlayed.
+    """
     [subtitles, transcription] = audio_data
-    # Create a list of TextClips
     text_clips = []
     if animate:
         for sub in subtitles:
@@ -63,11 +120,9 @@ def overlay_video(video_filename, audio_data, watermark_path, endcard_path, anim
             text_clips.append(new_clip)
     else:
         for sub in subtitles:
-            #color = '#FF7ED957' if (random.choice(range(10)) >= 4) else 'white'
             [clip, start, end] = make_textclip(sub, 70, color)
             new_clip = clip.set_start(start).set_duration(end - start).set_position('center')
             text_clips.append(new_clip)
-    # Overlay the text on the video
     video = mpe.VideoFileClip(video_filename)
     overlay = mpe.CompositeVideoClip([video, *text_clips])
     video_duration = overlay.duration

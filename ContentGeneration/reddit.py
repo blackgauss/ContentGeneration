@@ -10,14 +10,14 @@ APP_ID = os.getenv("APP_ID")
 APP_SECRET = os.getenv("APP_SECRET")
 SUBREDDIT = os.getenv("SUBREDDIT")
 
-reddit = praw.Reddit(
+
+def scrape_posts(NUM_COMMENTS=3, NUM_POSTS=25, MIN_WORDS=300):
+    reddit = praw.Reddit(
     client_id= APP_ID,
     client_secret= APP_SECRET,
     user_agent=f"Window11:TestApp:v0.1 by {APP_NAME}",
-)
-subreddit = reddit.subreddit(SUBREDDIT)
-
-def scrape_posts(NUM_COMMENTS=3, NUM_POSTS=25, MIN_WORDS=300):
+    )
+    subreddit = reddit.subreddit(SUBREDDIT)
 
     posts = []
 
