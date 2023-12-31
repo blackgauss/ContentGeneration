@@ -1,5 +1,4 @@
 # ContentGeneration
-
 ## About
 An experiment in generating shortform content systematically using the moviepy library and ChatGPT.
 
@@ -8,6 +7,8 @@ This project aims to explore the possibilities of generating shortform content u
 
 ## Functionality
 The project provides a set of functions and utilities that allow users to generate shortform content based on various inputs. These inputs can include text prompts, video clips, and other media assets. The moviepy library is used for video editing and manipulation, while ChatGPT is used for generating text based on given prompts.
+
+### describe the functions in ./ContentGeneration
 
 ## Examples
 Here are some examples of how the ContentGeneration project can be used:
