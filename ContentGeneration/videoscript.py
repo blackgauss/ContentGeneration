@@ -79,7 +79,7 @@ def create_script(post, reference):
     reference = format_script(post)
     first_prompt = make_prompt(writer_prompt, reference)
     script = chat_gpt(first_prompt, model_name='gpt-4-1106-preview')
-    second_prompt = make_prompt(hook_prompt, reference)
+    second_prompt = make_prompt(hook_prompt, script)
     edited_script = chat_gpt(second_prompt, model_name='gpt-4-1106-preview')
     third_prompt = make_prompt(editor_prompt, edited_script)
     edited_script2 = chat_gpt(third_prompt, model_name='gpt-4-1106-preview')
