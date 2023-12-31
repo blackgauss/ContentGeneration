@@ -14,7 +14,7 @@ def get_file_names(folder, file_type='.mp4'):
     return file_names
 
 
-def get_voiceover(voiceover_path, music_path, SFX_PATH):
+def get_voiceover(voiceover_path, music_path):
     """
     Get the voiceover audio clip for a given ID.
 
@@ -28,11 +28,10 @@ def get_voiceover(voiceover_path, music_path, SFX_PATH):
     """
     sound1 = mpe.AudioFileClip(voiceover_path)
     sound2 = mpe.AudioFileClip(music_path).volumex(0.3)
-    sound3 = mpe.AudioFileClip(SFX_PATH).volumex(0.4)
 
     dur = sound1.duration
 
-    final_audio = mpe.CompositeAudioClip([sound1, sound2, sound3]).subclip(0, dur)
+    final_audio = mpe.CompositeAudioClip([sound1, sound2]).subclip(0, dur)
 
     return [final_audio, dur]
 
@@ -62,7 +61,7 @@ def make_video(duration, clips_folder, clip_length=5):
     new_clips = []
     while total_dur < duration:
         for clip in order:
-            new_clip = clip.without_audio().fx(mpe.vfx.speedx, 1.1)
+            new_clip = clip.without_audio().fx(mpe.vfx.speedx, 1.5).fx(mpe.vfx.mirror_x)
             end = min(clip_length, new_clip.duration)
             if clip_length < new_clip.duration:
                 new_clip = new_clip.subclip(0, end)
@@ -87,3 +86,11 @@ def add_avatar(video, avatar_path):
     avatar = avatar.resize(height=video.h / 4)
     avatar = avatar.set_position((video.w - avatar.w - (2 * avatar.w), 4 * avatar.w))
     return mpe.CompositeVideoClip([video, avatar])
+
+def add_vfx(vid, VFX_FOLDER):
+    pass
+
+
+def add_clip(vid1, vid2):
+    new_vid = vid1.mask_color(vid2, color=[255,0,0], thr=200, s=3)
+    return vid1

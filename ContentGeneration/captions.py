@@ -122,13 +122,15 @@ def overlay_video(video, audio_data, watermark_path, endcard_path, colored=False
         text_clips.append(new_clip)
     overlay = mpe.CompositeVideoClip([video, *text_clips])
     video_duration = overlay.duration
-    logo = (mpe.ImageClip(watermark_path)
-          .set_duration(video_duration)
-          .resize(height=150) # if you need to resize...
-          #.margin(right=8, top=8, opacity=.5) # (optional) logo-border padding
-          .set_pos(("left","bottom")))
+    if False:
+        logo = (mpe.ImageClip(watermark_path)
+            .set_duration(video_duration)
+            .resize(height=150) # if you need to resize...
+            #.margin(right=8, top=8, opacity=.5) # (optional) logo-border padding
+            .set_pos(("left","bottom")))
     video_h = overlay.h
     video_w = overlay.w
-    end_card = mpe.VideoFileClip(endcard_path).resize(height=video_h, width=video_w).set_start(video_duration)
-    final = mpe.CompositeVideoClip([overlay, logo, end_card])
+    # end_card = mpe.VideoFileClip(endcard_path).resize(height=video_h, width=video_w).set_start(video_duration)
+    # final = mpe.CompositeVideoClip([overlay])
+    final = overlay
     return final

@@ -10,6 +10,12 @@ This project aims to explore the possibilities of generating shortform content u
 - [ ] Automated uploading to a google drive
 - [ ] Document the project and share the results
 
+## Workflow
+- [] Research
+- [] Script Creation
+- [] Background Footage Sourcing
+- [] Post Process and VFX
+- [] Add captions
 
 
 
