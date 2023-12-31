@@ -15,6 +15,17 @@ def get_file_names(folder, file_type='.mp4'):
 
 
 def get_voiceover(id, file_path, music_path):
+    """
+    Get the voiceover audio clip for a given ID.
+
+    Args:
+        id (int): The ID of the voiceover file.
+        file_path (str): The path to the voiceover file.
+        music_path (str): The path to the music file.
+
+    Returns:
+        list: A list containing the final audio clip and its duration.
+    """
     sound1 = mpe.AudioFileClip(f"{file_path}{id}.mp3")
     sound2 = mpe.AudioFileClip(music_path).volumex(0.3)
 
@@ -26,6 +37,18 @@ def get_voiceover(id, file_path, music_path):
 
 
 def make_video(duration, hooks_folder, clips_folder, clip_length=5):
+    """
+    Create a video by combining hooks and clips.
+
+    Args:
+        duration (float): The desired duration of the final video in seconds.
+        hooks_folder (str): The path to the folder containing the hook videos.
+        clips_folder (str): The path to the folder containing the clip videos.
+        clip_length (float, optional): The maximum length of each clip in seconds. Defaults to 5.
+
+    Returns:
+        moviepy.video.io.VideoFileClip: The final video clip.
+    """
     hooks_paths = get_file_names(hooks_folder)
     hook_names = random.sample(hooks_paths, 2)
     hooks = [mpe.VideoFileClip(f"{hooks_folder}/{hook_name}.mp4") for hook_name in hook_names]
@@ -48,6 +71,16 @@ def make_video(duration, hooks_folder, clips_folder, clip_length=5):
 
 
 def add_avatar(video, avatar_path):
+    """
+    Add an avatar to a video.
+
+    Args:
+        video (VideoClip): The video to add the avatar to.
+        avatar_path (str): The path to the avatar image file.
+
+    Returns:
+        CompositeVideoClip: The video with the avatar added.
+    """
     avatar = mpe.ImageClip(avatar_path).set_duration(video.duration)
     avatar = avatar.resize(height=video.h / 4)
     avatar = avatar.set_position((video.w - avatar.w - (2 * avatar.w), 4 * avatar.w))

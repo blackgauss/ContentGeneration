@@ -12,6 +12,24 @@ client = OpenAI(
 )
 
 def save_script(post, rawscript_path = '../videos/raw_scripts'):
+    """
+    Save the script to a text file.
+
+    Args:
+        post (tuple): A tuple containing the post information.
+            The tuple should have the following elements:
+            - id (int): The ID of the post.
+            - url (str): The URL of the post.
+            - question (str): The question of the post.
+            - context (str): The context of the post.
+            - answers (list): A list of answers for the post.
+            - citation (list): A list of citations for the post.
+        rawscript_path (str, optional): The path to the directory where the script file will be saved.
+            Defaults to '../videos/raw_scripts'.
+
+    Returns:
+        None
+    """
     id = post[0]
     url = post[1]
     question = post[2]
