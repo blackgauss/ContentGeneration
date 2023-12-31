@@ -14,7 +14,7 @@ def get_file_names(folder, file_type='.mp4'):
     return file_names
 
 
-def get_voiceover(id, file_path, music_path):
+def get_voiceover(voiceover_path, music_path):
     """
     Get the voiceover audio clip for a given ID.
 
@@ -26,7 +26,7 @@ def get_voiceover(id, file_path, music_path):
     Returns:
         list: A list containing the final audio clip and its duration.
     """
-    sound1 = mpe.AudioFileClip(f"{file_path}{id}.mp3")
+    sound1 = mpe.AudioFileClip(voiceover_path)
     sound2 = mpe.AudioFileClip(music_path).volumex(0.3)
 
     dur = sound1.duration
@@ -36,7 +36,7 @@ def get_voiceover(id, file_path, music_path):
     return [final_audio, dur]
 
 
-def make_video(duration, hooks_folder, clips_folder, clip_length=5):
+def make_video(duration, clips_folder, clip_length=5):
     """
     Create a video by combining hooks and clips.
 
@@ -49,24 +49,25 @@ def make_video(duration, hooks_folder, clips_folder, clip_length=5):
     Returns:
         moviepy.video.io.VideoFileClip: The final video clip.
     """
-    hooks_paths = get_file_names(hooks_folder)
-    hook_names = random.sample(hooks_paths, 2)
-    hooks = [mpe.VideoFileClip(f"{hooks_folder}/{hook_name}.mp4") for hook_name in hook_names]
-    vids = get_file_names(clips_folder)
-    clip_paths = [f"{clips_folder}/{vid}.mp4" for vid in vids]
-    clips = [mpe.VideoFileClip(clip_path) for clip_path in clip_paths]
+    clips = []
+    for file in os.listdir(clips_folder):
+        if file.endswith('.mp4'):
+            vid_path = os.path.join(clips_folder, file)
+            clips.append(mpe.VideoFileClip(vid_path))
+    if len(clips) == 0:
+        return 'No clips found.'
     total_dur = 0
     order = random.sample(clips, len(clips))
     new_clips = []
     while total_dur < duration:
         for clip in order:
-            new_clip = clip.copy().without_audio().fx(mpe.vfx.speedx, 2)
+            new_clip = clip.without_audio().fx(mpe.vfx.speedx, 1.1)
             end = min(clip_length, new_clip.duration)
             if clip_length < new_clip.duration:
-                new_clip = new_clip.copy().subclip(0, end)
+                new_clip = new_clip.subclip(0, end)
             new_clips.append(new_clip)
             total_dur += end
-    final_video = mpe.concatenate_videoclips([hooks[0].set_duration(4)] + new_clips, method='compose')
+    final_video = mpe.concatenate_videoclips(new_clips, method='compose')
     return final_video.subclip(0, min(final_video.duration, duration))
 
 
@@ -85,3 +86,13 @@ def add_avatar(video, avatar_path):
     avatar = avatar.resize(height=video.h / 4)
     avatar = avatar.set_position((video.w - avatar.w - (2 * avatar.w), 4 * avatar.w))
     return mpe.CompositeVideoClip([video, avatar])
+'''
+def make_video(script_id, clips_folder, voiceover_folder, save_folder, clip_length):
+    file_path = f'{save_folder}/{script_id}.mp4'
+    if not os.path.exists(file_path):
+        [audio, dur] = get_voiceover(script_id, voiceover_folder)
+        final_clip = make_video(dur, clips_folder, clip_length)
+        final_clip.set_audio(audio).write_videofile(file_path, audio_codec='aac')
+    else:
+        return f'{script_id} already exists.'
+'''

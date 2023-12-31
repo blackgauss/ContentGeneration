@@ -5,7 +5,7 @@ from moviepy.editor import VideoFileClip, TextClip, CompositeVideoClip
 import random
 import os
 
-def get_file_names(folder, file_type='.mp4'):
+def get_file_names(folder, file_type):
     """
     Get the names of files in a folder with a specific file type.
 
@@ -93,12 +93,12 @@ def resize(t, duration):
     return scale_factor
 
 # Function to overlay the text clips on the video
-def overlay_video(video_filename, audio_data, watermark_path, endcard_path, animate=False):
+def overlay_video(video, audio_data, watermark_path, endcard_path, colored=False, animate=False, font_name='Arial'):
     """
     Overlay text, watermark, and end card on a video.
 
     Args:
-        video_filename (str): Path to the video file.
+        video_filename (MoviePy): moviepy video object.
         audio_data (list): List containing subtitles and transcription.
         watermark_path (str): Path to the watermark image file.
         endcard_path (str): Path to the end card video file.
@@ -109,21 +109,17 @@ def overlay_video(video_filename, audio_data, watermark_path, endcard_path, anim
     """
     [subtitles, transcription] = audio_data
     text_clips = []
-    if animate:
-        for sub in subtitles:
-            color = 'rgb(126, 217, 87)' if (random.choice(range(10)) > 7) else 'white'
+    for sub in subtitles:
+        colored = 'white'
+        if colored:
+            color = 'rgb(126, 217, 87)' if (random.choice(range(10)) > 8) else 'white'
             color = 'yellow' if (random.choice(range(10)) > 6) else color
-            [clip, start, end] = make_textclip(sub, font_size=65, font_color=color)
-            duration = end - start
+        [clip, start, end] = make_textclip(sub, font_name, font_size=65, font_color=color)
+        duration = end - start
+        if animate:
             resize_clip = clip.resize(lambda t: resize(t, duration))
-            new_clip = resize_clip.set_start(start).set_duration(end - start).set_position('center')
-            text_clips.append(new_clip)
-    else:
-        for sub in subtitles:
-            [clip, start, end] = make_textclip(sub, 70, color)
-            new_clip = clip.set_start(start).set_duration(end - start).set_position('center')
-            text_clips.append(new_clip)
-    video = mpe.VideoFileClip(video_filename)
+        new_clip = resize_clip.set_start(start).set_duration(end - start).set_position('center')
+        text_clips.append(new_clip)
     overlay = mpe.CompositeVideoClip([video, *text_clips])
     video_duration = overlay.duration
     logo = (mpe.ImageClip(watermark_path)

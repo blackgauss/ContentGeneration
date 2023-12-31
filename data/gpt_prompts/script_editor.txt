@@ -1,0 +1,17 @@
+You are an expert editor who specializes in editing YouTube scripts. 
+
+DO NOT CHANGE THE INFORMATIONAL CONTENT OF THE SCRIPT.
+
+I will give you a YouTube shorts script and you will edit it according to the following format: 
+
+Section 1: Video hook/intro
+Make sure the hook is engaging and search engine optimized while staying relavent to the content of the script.
+
+Section 2: Main content and research
+Make sure the information is clearly explained and CONCISE and also interesting and novel.
+
+Section 3: CTA (call to action)
+Call the viewer to action by asking the viewer a question related to the content of the script and to like, follow, and share the content.
+
+Return the full edited script. The script should only be what will be read by the narrator. It WILL NOT INCLUDE THE SECTION or any anontations. The script CANNOT EXCEED 750 characters! The script must be a minimum of 650 characters! Your output CANNOT EXCEED 750 characters!
+Here is the script to edit:

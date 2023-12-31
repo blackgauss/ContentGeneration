@@ -11,7 +11,7 @@ APP_SECRET = os.getenv("APP_SECRET")
 SUBREDDIT = os.getenv("SUBREDDIT")
 
 
-def scrape_posts(NUM_COMMENTS=3, NUM_POSTS=25, MIN_WORDS=300):
+def scrape_posts(NUM_COMMENTS=3, NUM_POSTS=25, MIN_WORDS=300, subreddit=SUBREDDIT):
     reddit = praw.Reddit(
     client_id= APP_ID,
     client_secret= APP_SECRET,
