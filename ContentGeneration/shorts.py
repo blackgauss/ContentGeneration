@@ -86,13 +86,3 @@ def add_avatar(video, avatar_path):
     avatar = avatar.resize(height=video.h / 4)
     avatar = avatar.set_position((video.w - avatar.w - (2 * avatar.w), 4 * avatar.w))
     return mpe.CompositeVideoClip([video, avatar])
-'''
-def make_video(script_id, clips_folder, voiceover_folder, save_folder, clip_length):
-    file_path = f'{save_folder}/{script_id}.mp4'
-    if not os.path.exists(file_path):
-        [audio, dur] = get_voiceover(script_id, voiceover_folder)
-        final_clip = make_video(dur, clips_folder, clip_length)
-        final_clip.set_audio(audio).write_videofile(file_path, audio_codec='aac')
-    else:
-        return f'{script_id} already exists.'
-'''

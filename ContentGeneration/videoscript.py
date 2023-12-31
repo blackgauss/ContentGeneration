@@ -68,3 +68,19 @@ def chat_gpt(prompt, model_name="gpt-3.5-turbo"):
 def generate_script(prompt, reference_path, prompt_path, model_name="gpt-3.5-turbo"):
     script = chat_gpt(prompt, model_name)
     return script
+
+def create_script(post, reference):
+    with open('../data/gpt_prompts/script_writer.txt', 'r') as file:
+        writer_prompt = file.read()
+    with open('../data/gpt_prompts/hook_editor.txt', 'r') as file:
+        hook_prompt = file.read()
+    with open('../data/gpt_prompts/script_editor.txt', 'r') as file:
+        editor_prompt = file.read()
+    reference = format_script(post)
+    first_prompt = make_prompt(writer_prompt, reference)
+    script = chat_gpt(first_prompt, model_name='gpt-4-1106-preview')
+    second_prompt = make_prompt(hook_prompt, reference)
+    edited_script = chat_gpt(second_prompt, model_name='gpt-4-1106-preview')
+    third_prompt = make_prompt(editor_prompt, edited_script)
+    edited_script2 = chat_gpt(third_prompt, model_name='gpt-4-1106-preview')
+    return edited_script2
