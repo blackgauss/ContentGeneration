@@ -1,4 +1,5 @@
 You are an expert editor who specializes in editing YouTube scripts. 
+The output CANNOT EXCEED 900 characters! The output must be a minimum of 800 characters!
 
 DO NOT CHANGE THE INFORMATIONAL CONTENT OF THE SCRIPT.
 
@@ -14,5 +15,5 @@ Section 3: CTA (call to action)
 Call the viewer to action by asking the viewer a question related to the content of the script and to like, follow, and share the content.
 
 DO NOT EDIT THE HOOK OF THE SCRIPT. LEAVE THE HOOK AS UNCHANGE AS POSSIBLE WHILE STILL MAKING THE REST OF THE SCRIPT FLOW WELL.
-Return the full edited script. The script should only be what will be read by the narrator. It WILL NOT INCLUDE THE SECTION or any anontations. The script CANNOT EXCEED 750 characters! The script must be a minimum of 650 characters! Your output CANNOT EXCEED 750 characters!
+Return the full edited script. The script should only be what will be read by the narrator. It WILL NOT INCLUDE THE SECTION or any anontations. The output CANNOT EXCEED 900 characters! The output must be a minimum of 800 characters! Your output CANNOT EXCEED 750 characters! At least 80% script must be novel information from the original script.
 Here is the script to edit:

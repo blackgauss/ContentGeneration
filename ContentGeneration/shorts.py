@@ -14,7 +14,7 @@ def get_file_names(folder, file_type='.mp4'):
     return file_names
 
 
-def get_voiceover(voiceover_path, music_path):
+def get_voiceover(voiceover_path, music_path, SFX_PATH):
     """
     Get the voiceover audio clip for a given ID.
 
@@ -28,10 +28,11 @@ def get_voiceover(voiceover_path, music_path):
     """
     sound1 = mpe.AudioFileClip(voiceover_path)
     sound2 = mpe.AudioFileClip(music_path).volumex(0.3)
+    sound3 = mpe.AudioFileClip(SFX_PATH).volumex(0.4)
 
     dur = sound1.duration
 
-    final_audio = mpe.CompositeAudioClip([sound1, sound2]).subclip(0, dur)
+    final_audio = mpe.CompositeAudioClip([sound1, sound2, sound3]).subclip(0, dur)
 
     return [final_audio, dur]
 

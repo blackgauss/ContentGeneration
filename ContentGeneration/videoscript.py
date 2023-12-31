@@ -74,7 +74,6 @@ def rank_interest(reference):
     except:
         return None
 
-    return interest
 def create_draft(reference):
     with open('../data/gpt_prompts/script_writer.txt', 'r') as file:
         writer_prompt = file.read()
@@ -118,6 +117,12 @@ def revise_script(script, critique):
     revision = chat_gpt(prompt, model_name='gpt-4-1106-preview')
     return revision
 
+def combine_scripts(scripts):
+    with open('../data/gpt_prompts/genius.txt', 'r') as file:
+        combine_prompt = file.read()
+    prompt = make_prompt(combine_prompt, scripts)
+    combined_script = chat_gpt(prompt, model_name='gpt-4-1106-preview')
+    return combined_script
 
 def score_script(script):
     with open('../data/gpt_prompts/script_scorer.txt', 'r') as file:
