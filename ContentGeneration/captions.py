@@ -93,7 +93,7 @@ def resize(t, duration):
     return scale_factor
 
 # Function to overlay the text clips on the video
-def overlay_video(video, audio_data, watermark_path, endcard_path, colored=False, animate=False, font_name='Arial'):
+def overlay_video(video, audio_data, watermark_path, endcard_path, colored=False, animate=False, font_name='Arial', fnt_sz=65):
     """
     Overlay text, watermark, and end card on a video.
 
@@ -114,7 +114,7 @@ def overlay_video(video, audio_data, watermark_path, endcard_path, colored=False
         if colored:
             color = 'rgb(126, 217, 87)' if (random.choice(range(10)) > 8) else 'white'
             color = 'yellow' if (random.choice(range(10)) > 6) else color
-        [clip, start, end] = make_textclip(sub, font_name, font_size=65, font_color=color)
+        [clip, start, end] = make_textclip(sub, font_name, font_size=fnt_sz, font_color=color)
         duration = end - start
         if animate:
             resize_clip = clip.resize(lambda t: resize(t, duration))
