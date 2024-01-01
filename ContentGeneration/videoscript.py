@@ -1,6 +1,4 @@
-import json
 import os
-import random
 from openai import OpenAI
 from dotenv import load_dotenv
 load_dotenv()

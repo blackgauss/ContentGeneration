@@ -1,7 +1,5 @@
 import moviepy.editor as mpe
 import whisper_timestamped as whisper
-import json
-from moviepy.editor import VideoFileClip, TextClip, CompositeVideoClip
 import random
 import os
 
@@ -72,7 +70,7 @@ def make_textclip(sub, font_name, font_size, font_color):
     """
     start, end = sub[0]
     txt = sub[1]
-    return [TextClip(txt, fontsize=font_size, font=font_name, color=font_color, stroke_color='black', stroke_width=3), start, end]
+    return [mpe.TextClip(txt, fontsize=font_size, font=font_name, color=font_color, stroke_color='black', stroke_width=3), start, end]
 
 def resize(t, duration):
     """

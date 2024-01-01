@@ -61,7 +61,7 @@ def make_video(duration, clips_folder, clip_length=5):
     new_clips = []
     while total_dur < duration:
         for clip in order:
-            new_clip = clip.without_audio().fx(mpe.vfx.speedx, 1.5).fx(mpe.vfx.mirror_x)
+            new_clip = clip.without_audio().fx(mpe.vfx.speedx, 1.8).fx(mpe.vfx.mirror_x)
             end = min(clip_length, new_clip.duration)
             if clip_length < new_clip.duration:
                 new_clip = new_clip.subclip(0, end)
